@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 import time
 
-load_dotenv()
+load_dotenv(override=True)
 OPEN_AI_API_KEY = os.getenv("OPEN_AI_API_KEY")
 client = OpenAI(api_key=OPEN_AI_API_KEY)
 
@@ -25,15 +25,17 @@ file = upload_file("../data/airbnb-faq.pdf")
 # Create assistant
 # --------------------------------------------------------------
 def create_assistant(file):
+    # print([file.id])
     """
     You currently cannot set the temperature for Assistant via the API.
     """
     assistant = client.beta.assistants.create(
         name="WhatsApp AirBnb Assistant",
         instructions="You're a helpful WhatsApp assistant that can assist guests that are staying in our Paris AirBnb. Use your knowledge base to best respond to customer queries. If you don't know the answer, say simply that you cannot help with question and advice to contact the host directly. Be friendly and funny.",
-        tools=[{"type": "retrieval"}],
-        model="gpt-4-1106-preview",
-        file_ids=[file.id],
+        tools=[{"type": "file_search"}],
+        model="gpt-4o-2024-05-13",
+        
+        # file=[file.id],
     )
     return assistant
 

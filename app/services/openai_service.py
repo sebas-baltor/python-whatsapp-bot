@@ -51,7 +51,7 @@ def run_assistant(thread, name):
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
         assistant_id=assistant.id,
-        # instructions=f"You are having a conversation with {name}",
+        instructions=f"You are having a conversation with {name}",
     )
 
     # Wait for completion
